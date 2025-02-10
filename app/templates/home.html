@@ -1,0 +1,74 @@
+{% extends 'header.html' %} {% block content %}
+<main>
+    <h1 class="text-center">Buscador de personajes de Harry Potter</h1>
+
+    <div class="d-flex justify-content-center" style="margin-bottom: 1%">
+        <!-- Buscador del sitio -->
+        <form class="d-flex" action="{% url 'buscar' %}" method="POST">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" name="query" placeholder="Ginny, Ron, Harry" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div class="d-flex gap-1 col-2 mx-auto mb-3">
+        <form method="post" action="{% url 'filter_by_house' %}">
+            {% csrf_token %}
+            <input type="hidden" name="house" value="Gryffindor">
+            <button type="submit" class="btn btn-primary">SOLO Gryffindor</button>
+        </form>
+
+        <form method="post" action="{% url 'filter_by_house' %}">
+            {% csrf_token %}
+            <input type="hidden" name="house" value="Slytherin">
+            <button type="submit" class="btn btn-danger">SOLO Slytherin</button>
+        </form>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if images|length == 0 %}
+        <h2 class="text-center">La búsqueda no arrojó resultados...</h2>
+        {% else %} {% for img in images %}
+        <div class="col">
+            <!-- evaluar si la imagen pertenece a Gryffindor, Slytherin u otro -->
+            <div class="card border-success mb-3 ms-5" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ img.image }}" class="card-img-top" alt="imagen">
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ img.name }} ⭐</h3>
+                            <p class="card-text">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong><em>{{ img.alternate_names }}</em></strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </p>
+                            <p class="card-text"><small class="text-body-secondary">Género 🧒👧: {{ img.gender }}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">Casa 🏠: {{ img.house }}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">Protagonizado por 📢: {{ img.actor }}</small></p>
+                        </div>
+                        {% if request.user.is_authenticated %}
+                        <div class="card-footer text-center">
+                            <form method="post" action="{% url 'agregar-favorito' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="name" value="{{ img.name }}">
+                                <input type="hidden" name="gender" value="{{ img.gender }}">
+                                <input type="hidden" name="house" value="{{ img.house }}">
+                                <input type="hidden" name="actor" value="{{ img.actor }}">
+                                <input type="hidden" name="image" value="{{ img.image }}"> {% if img in favourite_list %}
+                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white" disabled>✔️ Favoritos</button> {% else %}
+                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white">❤️ Favoritos</button> {% endif %}
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+</main>
+{% endblock %}
