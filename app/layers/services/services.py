@@ -1,5 +1,6 @@
 # capa de servicio/lógica de negocio
 
+from ..utilities import card
 from ..transport import transport
 from ..persistence import repositories
 from ..utilities import translator
@@ -13,28 +14,28 @@ def getAllImages():
     # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
     # ATENCIÓN: contemplar que los nombres alternativos, para cada personaje, deben elegirse al azar. Si no existen nombres alternativos, debe mostrar un mensaje adecuado.
 
-    raw_images = getAllImages()
+    raw_images = transport()
 
-    cards = []
+    card = []
 
     for img in raw_images:
         name = img.get("name","")
         alternative_names = img.get("alternate_names",[])
         image_url = img.get("image","")
-    
-    if alternative_names:
-        alt_name = random.choice(alternative_names) #sacado de chatGPT, preguntar como hacerlo sin random.choice
-    else:
-        alt_name = "El personaje no posee nombre alternativ"
+        
+        if alternative_names:
+            alt_name = random.choice(alternative_names) #intentar el random sin funciones extras
+        else:
+            alt_name = "El personaje no posee nombre alternativo"
 
-    card = {
+    card1 = {
         "name": name,
         "alt_name": alt_name,
-        "imgage_url": image_url
+        "image_url": image_url
     } 
-    cards.append(card)
-    pass
-return cards
+    cards.append(card1)
+    
+    return card
 
 # función que filtra según el nombre del personaje.
 def filterByCharacter(name):
