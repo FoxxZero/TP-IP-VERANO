@@ -1,7 +1,6 @@
 # capa de servicio/lógica de negocio
 
-from app.layers.utilities.card import card
-from ..transport import transport
+from app.layers.transport.transport import transport
 from ..persistence import repositories
 from app.layers.utilities.translator import fromRequestIntoCard
 from django.contrib.auth import get_user
