@@ -1,6 +1,9 @@
 # capa de servicio/lógica de negocio
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 02d824bfe80ac51d82bdf3fccc2d9f4de8b98ea5
 from app.layers.transport.transport import transport
 from ..persistence import repositories
 from app.layers.utilities.translator import fromRequestIntoCard

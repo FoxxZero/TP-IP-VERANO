@@ -7,9 +7,15 @@ def fromRequestIntoCard(object):
     card = Card(
         name=object['name'],  # Nombre del personaje
         gender=object['gender'],  # Género del personaje
+<<<<<<< HEAD
         house=object.get('house') or ("Casa desconocida"),  # Casa (puede no estar presente)
         alternate_names=object.get('alternate_names') or ('No posee nombre alternativo'), # nombres alternativos
         actor=object.get('actor') or ('Actor Desconocido'),  # Actor (puede no estar presente)
+=======
+        house=object.get('house') or ('No se conoce la casa'),  # Casa (puede no estar presente)
+        alternate_names=object.get('alternate_names') or ('No tiene nombres alternativos'), # nombres alternativos
+        actor=object.get('actor') or ('No se conoce el actor'),  # Actor (puede no estar presente)
+>>>>>>> 02d824bfe80ac51d82bdf3fccc2d9f4de8b98ea5
         image=object['image']  # URL de la imagen
     )
     return card

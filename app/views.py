@@ -1,6 +1,10 @@
 # capa de vista/presentación
 
 from django.shortcuts import redirect, render
+<<<<<<< HEAD
+=======
+from app.layers.services.services import getAllImages # (Gino) Como estaba por default, daba error, se cambio para que traiga la funcion concreta.
+>>>>>>> 02d824bfe80ac51d82bdf3fccc2d9f4de8b98ea5
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from app.layers.services.services import getAllImages
