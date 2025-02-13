@@ -1,9 +1,9 @@
 # capa de servicio/lógica de negocio
 
-from ..utilities import card
+from app.layers.utilities.card import card
 from ..transport import transport
 from ..persistence import repositories
-from ..utilities import translator
+from app.layers.utilities.translator import fromRequestIntoCard
 from django.contrib.auth import get_user
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de HP.
@@ -16,26 +16,13 @@ def getAllImages():
 
     raw_images = transport()
 
-    card = []
+    card_list = []
 
     for img in raw_images:
-        name = img.get("name","")
-        alternative_names = img.get("alternate_names",[])
-        image_url = img.get("image","")
-        
-        if alternative_names:
-            alt_name = random.choice(alternative_names) #intentar el random sin funciones extras
-        else:
-            alt_name = "El personaje no posee nombre alternativo"
-
-    card1 = {
-        "name": name,
-        "alt_name": alt_name,
-        "image_url": image_url
-    } 
-    cards.append(card1)
+        card = fromRequestIntoCard(img)
+        card_list.append(card)
     
-    return card
+    return card_list
 
 # función que filtra según el nombre del personaje.
 def filterByCharacter(name):
