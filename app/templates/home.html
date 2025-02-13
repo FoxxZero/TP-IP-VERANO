@@ -32,9 +32,12 @@
         <div class="col">
             <!-- evaluar si la imagen pertenece a Gryffindor, Slytherin u otro -->
             <div class="card
-                {% if img.house == 'Slytherin' %} border-success
-                {% if img.house == 'Gryffindor' %} border-danger
-                {% else %} border-warning
+                {% if img.house == 'Slytherin' %} 
+                 border-success
+                {% elif img.house == 'Gryffindor' %}
+                 border-danger
+                {% else %} 
+                 border-warning
                 {% endif %}
                 mb-3 ms-5" style="max-width: 540px;">
                 <div class="row g-0">

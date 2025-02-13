@@ -1,16 +1,16 @@
 # capa de vista/presentación
 
 from django.shortcuts import redirect, render
-from .layers.services import services
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from app.layers.services.services import getAllImages
 
 def index_page(request):
     return render(request, 'index.html')
 
 # esta función obtiene 2 listados: uno de las imágenes de la API y otro de favoritos, ambos en formato Card, y los dibuja en el template 'home.html'.
 def home(request):
-    images = []
+    images = getAllImages()
     favourite_list = []
 
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -21,7 +21,7 @@ def search(request):
 
     # si el usuario ingresó algo en el buscador, se deben filtrar las imágenes por dicho ingreso.
     if (name != ''):
-        images = []
+        images = [img for img in getAllImages() if name.lower() in img.name.lower()]
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -33,7 +33,7 @@ def filter_by_house(request):
     house = request.POST.get('house', '')
 
     if house != '':
-        images = [] # debe traer un listado filtrado de imágenes, según la casa.
+        images = [img for img in getAllImages() if img.house == house] # debe traer un listado filtrado de imágenes, según la casa.
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
