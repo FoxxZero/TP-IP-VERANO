@@ -58,6 +58,7 @@
                             <p class="card-text"><small class="text-body-secondary">Casa 🏠: {{ img.house }}</small></p>
                             <p class="card-text"><small class="text-body-secondary">Protagonizado por 📢: {{ img.actor }}</small></p>
                         </div>
+                        <!-- parte de favoritos (guille) -->
                         {% if request.user.is_authenticated %}
                         <div class="card-footer text-center">
                             <form method="post" action="{% url 'agregar-favorito' %}">

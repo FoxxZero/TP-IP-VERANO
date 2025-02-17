@@ -5,8 +5,14 @@ from app.models import Favourite
 
 
 def save_favourite(fav):
+
     try:
-        fav = Favourite.objects.create(
+        favorito_repetidos = [f['name'] for f in get_all_favourites(fav.user)]
+        if fav.name in favorito_repetidos:
+            print (f"el personaje {fav.name} ya esta en favoritos de {fav.user.username}") 
+            return None
+            
+        return Favourite.objects.create(
             name=fav.name,  # Nombre del personaje
             gender=fav.gender,  # Género
             house=fav.house,  # Casa
@@ -15,7 +21,7 @@ def save_favourite(fav):
             
             user=fav.user  # Usuario autenticado
         )
-        return fav
+ 
     except IntegrityError as e:
         print(f"Error de integridad al guardar el favorito: {e}")
         return None
