@@ -1,7 +1,6 @@
 # capa de vista/presentación
 
 from django.shortcuts import redirect, render
-from app.layers.services.services import getAllImages # (Gino) Como estaba por default, daba error, se cambio para que traiga la funcion concreta.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from app.layers.services.services import saveFavourite as save_fav_service
