@@ -65,7 +65,7 @@ def deleteFavourite(request):
     id_fav = request.POST.get('id')
     delete_favourite(id_fav)
     
-    return redirect('favourites')
+    return redirect('/favourites/')
 
 @login_required
 def exit(request):
