@@ -1,9 +1,13 @@
 # capa de vista/presentación
 
 from django.shortcuts import redirect, render
+from app.layers.services.services import getAllImages # (Gino) Como estaba por default, daba error, se cambio para que traiga la funcion concreta.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from app.layers.services.services import saveFavourite as save_fav_service
+from app.layers.persistence.repositories import get_all_favourites
+from app.layers.persistence.repositories import delete_favourite
+
 
 def index_page(request):
     return render(request, 'index.html')
@@ -43,7 +47,10 @@ def filter_by_house(request):
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request): #FUNCION QUE DEVUELVE (guille)
-    pass
+    user = request.user
+    lista_de_favs = get_all_favourites(user)
+    
+    return render(request, 'favourites.html',{'favourite_list': lista_de_favs})
 
 @login_required
 def saveFavourite(request): #FUNCION QUE GUARDA (guille)
@@ -54,7 +61,10 @@ def saveFavourite(request): #FUNCION QUE GUARDA (guille)
 
 @login_required
 def deleteFavourite(request):
-    pass
+    id_fav = request.POST.get('id')
+    delete_favourite(id_fav)
+    
+    return redirect('favourites')
 
 @login_required
 def exit(request):

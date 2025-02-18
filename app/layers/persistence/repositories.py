@@ -8,6 +8,7 @@ def save_favourite(fav):
 
     try:
         favorito_repetidos = [f['name'] for f in get_all_favourites(fav.user)]
+        
         if fav.name in favorito_repetidos:
             print (f"el personaje {fav.name} ya esta en favoritos de {fav.user.username}") 
             return None
