@@ -9,13 +9,14 @@ from app.layers.persistence.repositories import get_all_favourites
 from app.layers.persistence.repositories import delete_favourite
 
 
+
 def index_page(request):
     return render(request, 'index.html')
 
 # esta función obtiene 2 listados: uno de las imágenes de la API y otro de favoritos, ambos en formato Card, y los dibuja en el template 'home.html'.
 def home(request):
     images = getAllImages()
-    favourite_list = []
+    favourite_list = [] #{fav['name'] for fav in get_all_favourites(request)} (se intento con este codigo pero devuelve un error)
 
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
 

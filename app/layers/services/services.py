@@ -4,6 +4,8 @@ from app.layers.transport.transport import transport
 from ..persistence import repositories
 from app.layers.utilities.translator import fromRequestIntoCard
 from django.contrib.auth import get_user
+from app.layers.persistence.repositories import get_all_favourites
+from app.layers.utilities.translator import fromRepositoryIntoCard
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de HP.
 def getAllImages():
@@ -24,6 +26,7 @@ def getAllImages():
     return card_list
 
 # función que filtra según el nombre del personaje.
+# FUNCION NO UTILIZADA (SE REEMPLAZA EN VIEWS.PY) -guille
 def filterByCharacter(name):
     filtered_cards = []
 
@@ -34,6 +37,7 @@ def filterByCharacter(name):
     return filtered_cards
 
 # función que filtra las cards según su casa.
+# FUNCION NO UTILIZADA (SE REEMPLAZA EN VIEWS.PY) -guille
 def filterByHouse(house_name):
     filtered_cards = []
 
@@ -57,11 +61,11 @@ def getAllFavourites(request):
     else:
         user = get_user(request)
 
-        favourite_list = [] # buscamos desde el repositories.py TODOS Los favoritos del usuario (variable 'user').
+        favourite_list = get_all_favourites(user) # buscamos desde el repositories.py TODOS Los favoritos del usuario (variable 'user').
         mapped_favourites = []
 
         for favourite in favourite_list:
-            card = '' # convertimos cada favorito en una Card, y lo almacenamos en el listado de mapped_favourites que luego se retorna.
+            card = fromRepositoryIntoCard(favourite.POST) # convertimos cada favorito en una Card, y lo almacenamos en el listado de mapped_favourites que luego se retorna.
             mapped_favourites.append(card)
 
         return mapped_favourites
